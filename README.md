@@ -174,3 +174,5 @@ This toolkit is provided for **cybersecurity education only**. The dictionary at
 ## License
 
 MIT License — feel free to use for learning, teaching, and interview preparation.
+
+web link: https://cyber-charm-toolkit.lovable.app
