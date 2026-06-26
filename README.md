@@ -123,34 +123,6 @@ The cracker hashes each entry in a local demo wordlist and compares it against t
 
 ---
 
-## Interview Q&A
-
-**Q. Why is MD5 (or SHA-1) unsuitable for password storage?**  
-They are designed to be fast and have known collision/preimage weaknesses. Modern GPUs compute billions of MD5/SHA-1 hashes per second, making dictionary and brute-force attacks trivial. Use a password KDF (bcrypt, scrypt, Argon2).
-
-**Q. What is password entropy?**  
-A measure of unpredictability in bits. With charset size `N` and length `L`, `entropy = L × log₂(N)`. 60 bits is a common minimum target; 80+ bits is comfortable; 100+ bits is very strong against offline attacks.
-
-**Q. What is a dictionary attack vs. brute force?**  
-Dictionary attacks try a curated list of likely passwords (leaks, common words, mangled variants). Brute force enumerates the whole keyspace. Dictionary attacks are far more efficient against human-chosen passwords.
-
-**Q. What is salting and why does it matter?**  
-A salt is a unique random value per user, stored alongside the hash. It prevents identical passwords from producing identical digests and defeats precomputed rainbow tables. Salts do not need to be secret — only unique.
-
-**Q. bcrypt vs Argon2 — which should I choose?**  
-Argon2id is the modern recommendation (winner of the Password Hashing Competition; resistant to GPU and side-channel attacks; tunable memory and time cost). bcrypt is still acceptable and widely supported, with a tunable work factor. Avoid plain SHA-256/SHA-512 for passwords.
-
-**Q. What is peppering?**  
-A server-side secret combined with the password before hashing, stored outside the database (e.g., in a KMS). If only the database leaks, the pepper is still required to mount an offline attack.
-
-**Q. Why are long passphrases better than short complex passwords?**  
-Entropy scales linearly with length and logarithmically with charset size. Adding length beats adding a symbol — and passphrases are also more memorable, reducing reuse.
-
-**Q. How should I store passwords in 2026?**  
-Argon2id with sensible parameters (e.g., memory ≥ 64 MiB, iterations ≥ 3, parallelism tuned to your hardware), per-user salt, optional server-side pepper, rate-limit auth endpoints, and require MFA.
-
----
-
 ## Python CLI Version
 
 An original menu-driven Python CLI is included under `password-toolkit/` for terminal enthusiasts.
